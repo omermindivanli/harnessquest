@@ -43,6 +43,7 @@ all = [
 [project.scripts]
 harnessquest = "harnessquest.cli.main:main"
 harnessquest-quest = "harnessquest.cli.quest_mode:quest_cli"
+harnessquest-play = "harnessquest.web.server:main"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

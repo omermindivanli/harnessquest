@@ -70,9 +70,10 @@ Dynamic: license-file
 
 ### 🛡️ Secure Execution Sandbox
 - Path traversal protection (`../../../etc/passwd` → blocked)
-- Dangerous command filtering (`rm -rf /`, fork bombs, `mkfs`, `dd`)
-- 15-second command timeout enforcement
-- Workspace isolation
+- Command allowlist, no shell (pipes, redirects and `$(...)` are refused)
+- Every path argument resolved through symlinks and kept inside the workspace
+- Scrubbed environment (API keys never reach child processes), 15-second timeout, CPU/file-size limits
+- Teaching sandbox, not an OS boundary: use a container for untrusted code
 
 ### 🧠 Context Engineering
 - **AGENTS.md** as map (not encyclopedia) — progressive disclosure
@@ -116,6 +117,17 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e .
 ```
+
+### Play in your browser (recommended)
+
+```bash
+mkdir my-harness-journey            # any empty folder: your progress and code live here
+harnessquest-play --dir my-harness-journey
+```
+
+Opens http://127.0.0.1:7777 (use `--port` to change it) with the 20 quests, an in-browser code editor, hints, a sandbox
+playground and a **Run check** button that really executes and tests your code. Everything runs
+locally; nothing is sent anywhere unless you pick a cloud provider for Level 1.
 
 ### 2. Try it with no API key (offline demo)
 
@@ -180,7 +192,13 @@ harnessquest-quest 1
 2. **[Understanding the Loop](docs/tutorials/02-understanding-the-loop.md)** — Agent loop internals
 3. **[Context Engineering](docs/tutorials/03-context-engineering.md)** — Progressive disclosure, token budgets
 
-More tutorials are tracked in [issues](https://github.com/omermindivanli/harnessquest/issues); contributions welcome.
+4. **[Tool Design](docs/tutorials/04-tool-design.md)**
+5. **[Constraint Management](docs/tutorials/05-constraint-management.md)**
+6. **[Evaluation Patterns](docs/tutorials/06-evaluation-patterns.md)**
+7. **[Multi-Provider](docs/tutorials/07-multi-provider.md)**
+8. **[Local LLMs](docs/tutorials/08-local-llms.md)**
+9. **[Observability](docs/tutorials/09-observability.md)**
+10. **[Production Hardening](docs/tutorials/10-production-hardening.md)**
 
 ### Quest Walkthroughs
 - [Level 1: Initiate](docs/quests/level-01-initiate.md) — Hello Harness

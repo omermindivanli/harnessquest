@@ -84,6 +84,17 @@ source .venv/bin/activate
 pip install -e .
 ```
 
+### Play in your browser (recommended)
+
+```bash
+mkdir my-harness-journey            # any empty folder: your progress and code live here
+harnessquest-play --dir my-harness-journey
+```
+
+Opens http://127.0.0.1:7777 (use `--port` to change it) with the 20 quests, an in-browser code editor, hints, a sandbox
+playground and a **Run check** button that really executes and tests your code. Everything runs
+locally; nothing is sent anywhere unless you pick a cloud provider for Level 1.
+
 ### 2. Try it with no API key (offline demo)
 
 ```bash
