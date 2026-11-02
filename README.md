@@ -1,13 +1,45 @@
-# 🛡️ HarnessQuest
+<p align="center"><img src="assets/banner.svg" alt="HarnessQuest: build your harness, level up your agent" width="100%"></p>
 
-*Unleash Autonomous Agents. Tame the Chaos. Level Up Your Infrastructure.*
+<p align="center">
+  <a href="https://github.com/omermindivanli/harnessquest/stargazers"><img src="https://img.shields.io/github/stars/omermindivanli/harnessquest?style=for-the-badge&logo=github&color=00f2fe" alt="Stars"></a>
+  <a href="https://github.com/omermindivanli/harnessquest/network/members"><img src="https://img.shields.io/github/forks/omermindivanli/harnessquest?style=for-the-badge&logo=github&color=38bdf8" alt="Forks"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-a855f7.svg?style=for-the-badge" alt="License"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.10%2B-00ff87.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://github.com/omermindivanli/harnessquest/actions"><img src="https://img.shields.io/github/actions/workflow/status/omermindivanli/harnessquest/quest_eval.yml?style=for-the-badge&label=tests" alt="Tests"></a>
+</p>
 
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Build](https://github.com/omermindivanli/harnessquest/actions/workflows/quest_eval.yml/badge.svg)](https://github.com/omermindivanli/harnessquest/actions)
-[![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://github.com/omermindivanli/harnessquest/tree/main/docs)
+## 🎮 What is HarnessQuest?
 
-`HarnessQuest` is an **open-source, gamified platform for learning harness engineering** — the discipline of building reliable scaffolding around AI agents. It combines a production-grade agent harness with a **20-level progressive RPG** that teaches you harness engineering concepts hands-on, one quest at a time.
+> **The golden law of agent systems:** `Agent = Model + Harness`
+
+An LLM on its own is raw, untamed power. Without a harness it strays outside its boundaries, hallucinates, and loops forever.
+
+**HarnessQuest is an open-source, retro-arcade game for learning harness engineering**: the discipline of building reliable scaffolding around AI agents. You solve 20 quests in a local web UI (or the terminal). For each one you write real code, a check actually runs it, and you earn XP and badges.
+
+```bash
+git clone https://github.com/omermindivanli/harnessquest.git && cd harnessquest
+python -m venv .venv && source .venv/bin/activate
+pip install -e .
+harnessquest-play          # opens http://127.0.0.1:7777, no API key needed
+```
+
+## 🕹️ The 20 quests
+
+| # | Quest | Level | XP |
+|---|-------|-------|----|
+| 1 | Hello Harness | beginner | +100 |
+| 2 | Sandbox Apprentice | beginner | +150 |
+| 3 | Context Novice | beginner | +150 |
+| 4 | Token Minimalist | intermediate | +200 |
+| 5 | Tool Smith | intermediate | +200 |
+| 6 | Guardrail Guardian | intermediate | +250 |
+| 7 | Verification Warden | advanced | +300 |
+| 8-19 | Memory, providers, local LLMs, NIM, tracing, multi-agent, specs, condensation, security, evals, architecture, hardening | mixed | +300 to +700 |
+| 20 | Harness Grandmaster | expert | +1000 |
+
+## 📐 Architecture flow
+
+<p align="center"><img src="assets/architecture.svg" alt="HarnessQuest architecture" width="100%"></p>
 
 ---
 
@@ -170,6 +202,9 @@ harnessquest-quest 1
 - [Level 1: Initiate](docs/quests/level-01-initiate.md) — Hello Harness
 - [Level 2: Sandbox Apprentice](docs/quests/level-02-sandbox-apprentice.md) — Execution Boundaries
 - Levels 3-20: see the [Playbook](docs/PLAYBOOK.md)
+
+### Branding
+- [Brand Guide](docs/BRAND_GUIDE.md) and [X Launch Kit](docs/X_LAUNCH_KIT.md)
 
 ### Architecture Diagrams
 - [System Architecture](docs/architecture/system-architecture.svg)
