@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "harnessquest"
+version = "1.0.0"
+description = "A gamified, production-grade AI Agent Harness and Execution Sandbox"
+readme = "README.md"
+authors = [{ name = "HarnessQuest Maintainers" }]
+license = { text = "MIT" }
+dependencies = [
+    "litellm>=1.0.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "langchain-core>=0.1.0"
+]
+
+[project.scripts]
+harnessquest = "harnessquest.cli.main:main"

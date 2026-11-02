@@ -1,0 +1,33 @@
+# 🛡️ HarnessQuest
+*Unleash Autonomous Agents. Tame the Chaos. Level Up Your Infrastructure.*
+
+`HarnessQuest` is an open-source, gamified AI agent harness and execution sandbox. It bridges the gap between unreliable LLM outputs and deterministic production deployments by turning harness engineering into a test-driven developer RPG.
+
+## Features
+- **Context Engineering:** Dynamic repository mapping (`AGENTS.md`) and token-efficient prompt injection.
+- **Secure Execution Sandbox:** Restricted file and terminal command execution boundaries.
+- **RPG Gamification Engine:** Earn XP, unlock achievement badges (*One-Shot Sniper*, *Context Minimalist*, *Ironclad Sandbox*), and level up as you build and run agents.
+- **LangChain Middleware Adapter:** Seamless integration with mainstream agent architectures.
+- **Automated CI/CD Evaluation:** GitHub Actions workflow running regression benchmarks against golden datasets.
+
+---
+
+## Installation
+
+Clone this repository and install in editable mode:
+
+```bash
+git clone https://github.com/yourusername/harnessquest.git
+cd harnessquest
+pip install -e .
+```
+
+---
+
+## Quickstart CLI Usage
+
+Run your first agent quest with gamified telemetry:
+
+```bash
+harnessquest --prompt "Inspect the repository structure and output [TASK_COMPLETE]" --model "gpt-4o"
+```

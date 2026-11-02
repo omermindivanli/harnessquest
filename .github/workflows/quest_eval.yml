@@ -1,0 +1,28 @@
+name: HarnessQuest PR Evaluation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quest-benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install pytest
+
+      - name: Run Benchmark Evaluation Suite
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          harnessquest --prompt "Run a self-test of the harness directory structure" --model "gpt-4o-mini"
