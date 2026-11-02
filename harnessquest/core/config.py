@@ -155,18 +155,21 @@ def validate_provider_config(provider: str) -> tuple[bool, str]:
     """Validate that a provider has required configuration."""
     settings = get_settings()
     
+    # Each provider maps to a LIST of (settings_attr, env_var_name) pairs.
+    # (Previously a bare tuple was iterated, which crashed with a ValueError for every cloud provider.)
     requirements = {
-        "openai": ("openai_api_key", "OPENAI_API_KEY"),
-        "anthropic": ("anthropic_api_key", "ANTHROPIC_API_KEY"),
-        "nim": ("nvidia_api_key", "NVIDIA_API_KEY"),
-        "ollama": (),  # No API key required
-        "litellm": (),  # Uses provider-specific keys
+        "openai": [("openai_api_key", "OPENAI_API_KEY")],
+        "anthropic": [("anthropic_api_key", "ANTHROPIC_API_KEY")],
+        "nim": [("nvidia_api_key", "NVIDIA_API_KEY")],
+        "ollama": [],  # No API key required
+        "litellm": [],  # Uses provider-specific keys
+        "mock": [],  # Offline demo provider, no key needed
     }
-    
+
     if provider not in requirements:
         return False, f"Unknown provider: {provider}"
-    
-    for attr, env_var in requirements.get(provider, []):
+
+    for attr, env_var in requirements[provider]:
         value = getattr(settings, attr, None)
         if not value:
             return False, f"{env_var} not set. Add to .env or environment variables."
@@ -204,6 +207,11 @@ Ollama Setup (Local LLMs):
 3. Pull models: ollama pull llama3.1:8b
 4. Optional .env: OLLAMA_BASE_URL=http://localhost:11434
 5. Models: llama3.1:8b, llama3.1:70b, nemotron3:ultra, codellama:13b
+""",
+        "mock": """
+Mock Provider (offline demo):
+No setup needed. A scripted fake agent plays the quests so you can try the
+whole game without an API key or internet. Use: --provider mock
 """,
         "litellm": """
 LiteLLM Setup (100+ Providers):

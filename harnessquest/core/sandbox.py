@@ -1,6 +1,7 @@
 """Isolated execution boundary for tool actions."""
 
 import os
+import re
 import subprocess
 from typing import Any, Dict
 
@@ -13,7 +14,8 @@ class ExecutionSandbox:
 
     def _validate_path(self, relative_path: str) -> str:
         target_path = os.path.abspath(os.path.join(self.workspace_root, relative_path))
-        if not target_path.startswith(self.workspace_root):
+        # commonpath avoids the prefix bug where /ws_evil passes a startswith("/ws") check
+        if os.path.commonpath([self.workspace_root, target_path]) != self.workspace_root:
             raise PermissionError(f"Access Denied: Path '{relative_path}' escapes sandbox root.")
         return target_path
 
@@ -26,15 +28,20 @@ class ExecutionSandbox:
 
     def write_file(self, file_path: str, content: str) -> str:
         safe_path = self._validate_path(file_path)
-        os.makedirs(os.path.dirname(safe_path), exist_ok=True)
+        os.makedirs(os.path.dirname(safe_path) or ".", exist_ok=True)
         with open(safe_path, "w", encoding="utf-8") as f:
             f.write(content)
         return f"Successfully wrote {len(content)} bytes to {file_path}."
 
     def run_command(self, command: str) -> Dict[str, Any]:
         """Executes a command safely inside the sandbox."""
-        forbidden = ["rm -rf /", "mkfs", "dd", "shutdown", ":(){:|:&};:"]
-        if any(cmd in command for cmd in forbidden):
+        # Word-boundary patterns: the old substring check blocked harmless text like "add" or "address".
+        forbidden = [
+            r"\brm\s+-[a-zA-Z]*r[a-zA-Z]*f?[a-zA-Z]*\s+(/|~|\$HOME)",
+            r"\bmkfs\b", r"\bdd\s+if=", r"\bshutdown\b", r"\breboot\b", r"\bsudo\b",
+            r":\(\)\s*\{.*\};\s*:",
+        ]
+        if any(re.search(p, command) for p in forbidden):
             return {"success": False, "error": "Security Violation: Blocked dangerous command."}
 
         try:

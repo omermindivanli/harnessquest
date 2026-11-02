@@ -1,3 +1,4 @@
+LICENSE
 README.md
 pyproject.toml
 harnessquest/__init__.py
@@ -19,9 +20,12 @@ harnessquest/core/sandbox.py
 harnessquest/eval/__init__.py
 harnessquest/eval/judge.py
 harnessquest/gamification/__init__.py
+harnessquest/gamification/checks.py
 harnessquest/gamification/levels.py
 harnessquest/gamification/progression.py
 harnessquest/gamification/xp.py
 harnessquest/middleware/__init__.py
 harnessquest/middleware/langchain_adapter.py
+tests/test_checks_and_mock.py
+tests/test_regressions.py
 tests/test_runner.py

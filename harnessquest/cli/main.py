@@ -18,7 +18,7 @@ console = Console()
 
 
 def print_banner():
-    banner_text = "[bold cyan]HARNESSQUEST[/bold cyan] [dim]v1.0.0[/dim] - [bold green]Gamified Harness Engine[/bold green]"
+    banner_text = "[bold cyan]HARNESSQUEST[/bold cyan] [dim]v1.1.0[/dim] - [bold green]Gamified Harness Engine[/bold green]"
     console.print(Panel(banner_text, expand=False, border_style="cyan"))
 
 
@@ -106,7 +106,10 @@ async def run_cli(prompt: str, model: str, provider: str, max_turns: int, temper
     else:
         console.print("\n[bold red]Quest Failed or Exceeded Turn Limits![/bold red]\n")
     
-    stats = result["gamification"]
+    stats = result.get("gamification")
+    if stats is None:
+        console.print(f"[red]Run failed:[/red] {result.get('error', result['status'])}")
+        sys.exit(1)
     table = Table(title="🛡️ Quest Completion Stats & Rewards", border_style="bright_blue")
     
     table.add_column("Metric", style="bold white")
@@ -124,7 +127,7 @@ async def run_cli(prompt: str, model: str, provider: str, max_turns: int, temper
     table.add_row("Active Badges", badges_str)
     
     console.print(table)
-    console.print(f"\n[bold white]Agent Output Summary:[/bold white]\n{result['output'][:500]}...\n")
+    console.print(f"\n[bold white]Agent Output Summary:[/bold white]\n{result.get('output', '')[:500]}\n")
 
 
 def main():

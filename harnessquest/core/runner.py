@@ -56,6 +56,7 @@ class HarnessRunner:
         turn = 0
         total_tokens = 0
         faults = 0
+        recent_cmds: List[str] = []
 
         while turn < self.max_turns:
             turn += 1
@@ -69,7 +70,18 @@ class HarnessRunner:
                 )
             except Exception as e:
                 faults += 1
-                return {"status": "error", "error": str(e), "turns": turn}
+                duration = time.time() - start_time
+                return {
+                    "status": "error",
+                    "error": str(e),
+                    "output": f"Provider error: {e}",
+                    "turns": turn,
+                    "total_tokens": total_tokens,
+                    "duration_seconds": round(duration, 2),
+                    "gamification": None,
+                    "provider": self.provider_name,
+                    "model": self.model,
+                }
 
             usage = getattr(response, "usage", None)
             if usage:
@@ -77,7 +89,7 @@ class HarnessRunner:
             else:
                 total_tokens += 300
 
-            content = response.choices[0].message.content
+            content = response.choices[0].message.content or ""
             history.append({"role": "assistant", "content": content})
 
             if "[TASK_COMPLETE]" in content:
@@ -94,18 +106,35 @@ class HarnessRunner:
                     "model": self.model,
                 }
 
-            if "RUN:" in content:
-                cmd = content.split("RUN:")[1].split("\n")[0].strip()
-                res = self.sandbox.run_command(cmd)
-                if not res["success"]:
-                    faults += 1
-                history.append({"role": "user", "content": f"Tool Execution Result:\n{res}"})
+            cmds = [ln.split("RUN:", 1)[1].strip() for ln in content.splitlines() if ln.strip().startswith("RUN:")]
+            if cmds:
+                results = []
+                for cmd in cmds[:3]:  # cap tool calls per turn
+                    recent_cmds.append(cmd)
+                    if recent_cmds[-3:] == [cmd] * 3:
+                        duration = time.time() - start_time
+                        return {
+                            "status": "loop_detected",
+                            "output": f"Loop detected: '{cmd}' repeated 3 times in a row.",
+                            "turns": turn,
+                            "total_tokens": total_tokens,
+                            "duration_seconds": round(duration, 2),
+                            "gamification": self.gamification.evaluate_run(turn, total_tokens, duration, faults + 1),
+                            "provider": self.provider_name,
+                            "model": self.model,
+                        }
+                    res = self.sandbox.run_command(cmd)
+                    if not res["success"]:
+                        faults += 1
+                    results.append(f"$ {cmd}\n{res}")
+                history.append({"role": "user", "content": "Tool Execution Result:\n" + "\n\n".join(results)})
             else:
                 history.append({"role": "user", "content": "Please proceed or output [TASK_COMPLETE]."})
 
         duration = time.time() - start_time
         return {
             "status": "max_turns_exceeded",
+            "output": f"Agent did not emit [TASK_COMPLETE] within {self.max_turns} turns.",
             "turns": turn,
             "total_tokens": total_tokens,
             "duration_seconds": round(duration, 2),

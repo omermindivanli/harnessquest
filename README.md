@@ -2,9 +2,8 @@
 
 *Unleash Autonomous Agents. Tame the Chaos. Level Up Your Infrastructure.*
 
-[![PyPI](https://img.shields.io/pypi/v/harnessquest.svg)](https://pypi.org/project/harnessquest/)
-[![Python](https://img.shields.io/pypi/pyversions/harnessquest.svg)](https://pypi.org/project/harnessquest/)
-[![License](https://img.shields.io/pypi/l/harnessquest.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Build](https://github.com/omermindivanli/harnessquest/actions/workflows/quest_eval.yml/badge.svg)](https://github.com/omermindivanli/harnessquest/actions)
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://github.com/omermindivanli/harnessquest/tree/main/docs)
 
@@ -84,7 +83,14 @@ source .venv/bin/activate
 pip install -e .
 ```
 
-### 2. Choose Your Provider
+### 2. Try it with no API key (offline demo)
+
+```bash
+harnessquest-quest 1 --provider mock
+harnessquest-quest --dashboard
+```
+
+### 3. Choose Your Provider
 
 #### 🆓 Option A: Ollama (Local, Free, Private) — **Recommended for Learning**
 ```bash
@@ -115,7 +121,7 @@ echo "NVIDIA_NIM_BASE_URL=https://integrate.api.nvidia.com/v1" >> .env
 harnessquest-quest 1 --provider nim --model meta/llama-3.1-70b-instruct
 ```
 
-### 3. Start Your Journey
+### 4. Start Your Journey
 
 ```bash
 # See all quests
@@ -132,22 +138,26 @@ harnessquest-quest 1
 
 ## 📚 Learning Path
 
-### Tutorials (Read in Order)
+### Start here
+- **[Playbook](docs/PLAYBOOK.md)** — exactly what to build at each of the 20 levels and how it is checked
+
+### Tutorials
 1. **[Getting Started](docs/tutorials/01-getting-started.md)** — Install, configure, run first quest
 2. **[Understanding the Loop](docs/tutorials/02-understanding-the-loop.md)** — Agent loop internals
 3. **[Context Engineering](docs/tutorials/03-context-engineering.md)** — Progressive disclosure, token budgets
-4. **[Tool Design](docs/tutorials/04-tool-design.md)** — Creating validated tools
-5. **[Constraint Management](docs/tutorials/05-constraint-management.md)** — Loops, turns, verification
-6. **[Evaluation Patterns](docs/tutorials/06-evaluation-patterns.md)** — LLM-as-judge, benchmarks
-7. **[Multi-Provider](docs/tutorials/07-multi-provider.md)** — Fallback routing, cost optimization
-8. **[Local LLMs](docs/tutorials/08-local-llms.md)** — Ollama deep dive
-9. **[Observability](docs/tutorials/09-observability.md)** — Telemetry, tracing, metrics
-10. **[Production Hardening](docs/tutorials/10-production-hardening.md)** — Sandboxing, compaction, CI
+
+4. **[Tool Design](docs/tutorials/04-tool-design.md)**
+5. **[Constraint Management](docs/tutorials/05-constraint-management.md)**
+6. **[Evaluation Patterns](docs/tutorials/06-evaluation-patterns.md)**
+7. **[Multi-Provider](docs/tutorials/07-multi-provider.md)**
+8. **[Local LLMs](docs/tutorials/08-local-llms.md)**
+9. **[Observability](docs/tutorials/09-observability.md)**
+10. **[Production Hardening](docs/tutorials/10-production-hardening.md)**
 
 ### Quest Walkthroughs
 - [Level 1: Initiate](docs/quests/level-01-initiate.md) — Hello Harness
 - [Level 2: Sandbox Apprentice](docs/quests/level-02-sandbox-apprentice.md) — Execution Boundaries
-- [Levels 3-20](docs/quests/) — Each with theory, verification, and reflection
+- Levels 3-20: see the [Playbook](docs/PLAYBOOK.md)
 
 ### Architecture Diagrams
 - [System Architecture](docs/architecture/system-architecture.svg)
@@ -288,7 +298,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 - **GitHub**: https://github.com/omermindivanli/harnessquest
 - **Issues**: https://github.com/omermindivanli/harnessquest/issues
 - **Discussions**: https://github.com/omermindivanli/harnessquest/discussions
-- **PyPI**: https://pypi.org/project/harnessquest/
 
 ---
 

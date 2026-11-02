@@ -1,6 +1,8 @@
 name: HarnessQuest PR Evaluation
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -18,11 +20,12 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
-          pip install pytest
+          pip install -e ".[dev]"
 
-      - name: Run Benchmark Evaluation Suite
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Run tests (offline, no API key needed)
+        run: pytest -q
+
+      - name: Smoke test the CLI with the offline mock provider
         run: |
-          harnessquest --prompt "Run a self-test of the harness directory structure" --model "gpt-4o-mini"
+          harnessquest --prompt "List the files" --provider mock --model mock
+          harnessquest-quest --list

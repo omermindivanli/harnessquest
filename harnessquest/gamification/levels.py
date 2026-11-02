@@ -587,19 +587,21 @@ class ProgressionEngine:
         if level == self.player_data.get("current_quest", 1):
             return QuestStatus.IN_PROGRESS
         
-        if level < self.player_data.get("current_quest", 1):
-            return QuestStatus.COMPLETED
-        
+        # A level is only COMPLETED if it is in completed_quests (checked above);
+        # jumping ahead no longer marks skipped levels as completed.
         return QuestStatus.AVAILABLE
     
     def start_quest(self, level: int) -> bool:
         """Mark a quest as in progress."""
-        if self.get_quest_status(level) != QuestStatus.AVAILABLE:
+        # Allow AVAILABLE, IN_PROGRESS (the current quest) and COMPLETED (replays);
+        # only locked quests are refused. Previously Level 1 could never be "started".
+        if self.get_quest_status(level) == QuestStatus.LOCKED:
             return False
-        self.player_data["current_quest"] = level
-        if level not in self.player_data.get("quest_attempts", {}):
-            self.player_data["quest_attempts"][level] = 0
-        self.player_data["quest_attempts"][level] += 1
+        attempts = self.player_data.setdefault("quest_attempts", {})
+        key = str(level)  # JSON object keys are strings; int keys broke after reload
+        attempts[key] = attempts.get(key, 0) + 1
+        if level not in self.player_data.get("completed_quests", []):
+            self.player_data["current_quest"] = level
         self._save()
         return True
     

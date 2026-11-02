@@ -90,19 +90,27 @@ class PlayerProfile:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get formatted stats for display."""
+        # Single source of truth: the ProgressionEngine (written by quest completion).
+        # Previously this read a separate file that was never updated, so the dashboard
+        # always showed 0 XP even after completing quests.
+        data = get_progression_engine().player_data
+        total_xp = data.get("total_xp", 0)
+        level = total_xp // 500 + 1
+        completed = len(data.get("completed_quests", []))
         return {
-            "level": self.profile.level,
-            "total_xp": self.profile.total_xp,
-            "quests_completed": f"{self.profile.quests_completed}/20",
-            "completion_pct": round(self.profile.quests_completed / 20 * 100, 1),
-            "badges_count": len(self.profile.badges),
-            "current_quest": self.profile.current_quest,
-            "xp_to_next_level": (self.profile.level * 500) - self.profile.total_xp,
+            "level": level,
+            "total_xp": total_xp,
+            "quests_completed": f"{completed}/20",
+            "completion_pct": round(completed / 20 * 100, 1),
+            "badges_count": len(data.get("unlocked_badges", [])),
+            "current_quest": data.get("current_quest", 1),
+            "xp_to_next_level": level * 500 - total_xp,
         }
-    
+
     def get_badges(self) -> List[Dict[str, Any]]:
         """Get all unlocked badges sorted by level."""
-        return sorted(self.profile.badges, key=lambda b: b["level"])
+        badges = get_progression_engine().player_data.get("unlocked_badges", [])
+        return sorted(badges, key=lambda b: b["level"])
     
     def get_quest_progress(self) -> List[Dict[str, Any]]:
         """Get progress for all quests."""

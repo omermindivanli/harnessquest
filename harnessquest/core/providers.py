@@ -582,8 +582,61 @@ class OllamaProvider(LLMProvider):
         return True, "Ollama provider configured"
 
 
+class _MockMessage:
+    def __init__(self, content: str):
+        self.content = content
+
+
+class _MockChoice:
+    def __init__(self, content: str):
+        self.message = _MockMessage(content)
+
+
+class _MockUsage:
+    def __init__(self, total_tokens: int):
+        self.total_tokens = total_tokens
+
+
+class _MockResponse:
+    def __init__(self, content: str):
+        self.choices = [_MockChoice(content)]
+        self.usage = _MockUsage(max(1, len(content) // 4) + 100)
+
+
+class MockProvider(LLMProvider):
+    """Offline, deterministic provider so anyone can play without an API key.
+
+    It acts like a tiny scripted agent: on its first turn it asks the harness to run a
+    command (so the loop, sandbox and tool-result plumbing are really exercised), and
+    once it has seen a tool result it declares the task complete.
+    """
+
+    @property
+    def provider_name(self) -> str:
+        return "mock"
+
+    async def complete(self, messages, model="mock", temperature=0.1, max_tokens=None, tools=None, **kwargs):
+        text = " ".join(m.get("content", "") for m in messages if m["role"] == "user").lower()
+        saw_tool_result = any("Tool Execution Result" in m.get("content", "") for m in messages)
+        if saw_tool_result:
+            return _MockResponse("The command ran inside the sandbox and I have what I need. [TASK_COMPLETE]")
+        if "etc/passwd" in text or "rm -rf" in text:
+            return _MockResponse("Attempting the forbidden operations to test the sandbox.\nRUN: rm -rf /")
+        return _MockResponse("Let me inspect the workspace.\nRUN: ls")
+
+    async def stream_complete(self, messages, model="mock", **kwargs):
+        yield await self.complete(messages, model)
+
+    def get_available_models(self) -> List[ModelInfo]:
+        return [ModelInfo("mock", "Mock Agent", "mock", 8000, True, False, "Scripted offline agent")]
+
+    def validate_config(self) -> tuple[bool, str]:
+        return True, "Mock provider needs no configuration"
+
+
 # Provider registry
 PROVIDER_REGISTRY: Dict[str, type[LLMProvider]] = {
+    "mock": MockProvider,
     "openai": OpenAIProvider,
     "anthropic": AnthropicProvider,
     "nim": NVIDIANIMProvider,
@@ -592,6 +645,11 @@ PROVIDER_REGISTRY: Dict[str, type[LLMProvider]] = {
 }
 
 PROVIDER_CONFIGS: Dict[str, ProviderConfig] = {
+    "mock": ProviderConfig(
+        name="Mock (offline demo)",
+        api_key_env="",
+        default_model="mock",
+    ),
     "openai": ProviderConfig(
         name="OpenAI",
         api_key_env="OPENAI_API_KEY",

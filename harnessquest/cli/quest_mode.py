@@ -53,7 +53,15 @@ def print_quest_header(quest):
 
 
 async def run_quest_verification(quest, runner: HarnessRunner) -> bool:
-    """Run the verification prompt and check if criteria met."""
+    """Verify a quest with a deterministic check (levels 2+) or a real agent run (level 1)."""
+    from harnessquest.gamification.checks import run_check
+
+    if quest.level != 1:
+        ok, msg = run_check(quest.level, workspace=".")
+        icon = "✅" if ok else "❌"
+        console.print(f"\n[bold]🎯 Verification:[/bold] {icon} {msg}")
+        return ok
+
     console.print(f"\n[bold]🎯 Running verification...[/bold]")
     console.print(f"Prompt: {quest.verification_prompt}")
     
@@ -67,11 +75,11 @@ async def run_quest_verification(quest, runner: HarnessRunner) -> bool:
     
     if result["status"] == "success":
         console.print("\n[bold green]✅ Task completed successfully![/bold green]")
-        console.print(f"Output: {result['output'][:300]}...")
+        console.print(f"Output: {result.get('output', '')[:300]}")
         return True
     else:
         console.print(f"\n[bold red]❌ Task failed: {result['status']}[/bold red]")
-        console.print(f"Output: {result['output'][:300]}...")
+        console.print(f"Output: {result.get('output', result.get('error', ''))[:300]}")
         return False
 
 
@@ -102,19 +110,16 @@ async def play_quest(level: int, provider: str, model: str, auto_verify: bool = 
     # Start quest
     engine.start_quest(level)
     
-    # Configure runner
-    valid, msg = validate_provider_config(provider)
-    if not valid:
-        console.print(f"[red]Provider error: {msg}[/red]")
-        console.print(get_provider_help(provider))
-        return False
-    
-    runner = HarnessRunner(
-        model=model,
-        max_turns=15,  # More turns for quests
-        workspace=".",
-        provider=provider,
-    )
+    # Only level 1 needs a live LLM; later levels are checked deterministically.
+    runner = None
+    if level == 1:
+        valid, msg = validate_provider_config(provider)
+        if not valid:
+            console.print(f"[red]Provider error: {msg}[/red]")
+            console.print(get_provider_help(provider))
+            console.print("[yellow]Tip: no API key? Try --provider mock for an offline demo.[/yellow]")
+            return False
+        runner = HarnessRunner(model=model, max_turns=15, workspace=".", provider=provider)
     
     # Run verification
     success = await run_quest_verification(quest, runner)
@@ -148,9 +153,9 @@ def show_quest_list():
     print_player_dashboard(profile)
     
     console.print("\n[bold]Available Commands:[/bold]")
-    console.print("  [cyan]harnessquest quest <level>[/cyan] - Play a quest")
-    console.print("  [cyan]harnessquest quest --list[/cyan] - Show this list")
-    console.print("  [cyan]harnessquest quest --dashboard[/cyan] - Show dashboard")
+    console.print("  [cyan]harnessquest-quest <level>[/cyan] - Play a quest")
+    console.print("  [cyan]harnessquest-quest --list[/cyan] - Show this list")
+    console.print("  [cyan]harnessquest-quest --dashboard[/cyan] - Show dashboard")
 
 
 def quest_cli():
@@ -162,18 +167,18 @@ def quest_cli():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  harnessquest quest --list                    # Show all quests
-  harnessquest quest --dashboard               # Show player dashboard
-  harnessquest quest 1                         # Play Level 1
-  harnessquest quest 5 --provider ollama       # Play with specific provider
-  harnessquest quest 10 --model llama3.1:70b   # Play with specific model
+  harnessquest-quest --list                    # Show all quests
+  harnessquest-quest --dashboard               # Show player dashboard
+  harnessquest-quest 1                         # Play Level 1
+  harnessquest-quest 5 --provider ollama       # Play with specific provider
+  harnessquest-quest 10 --model llama3.1:70b   # Play with specific model
         """
     )
     
     parser.add_argument("level", type=int, nargs="?", help="Quest level to play (1-20)")
     parser.add_argument("--list", action="store_true", help="List all quests")
     parser.add_argument("--dashboard", action="store_true", help="Show player dashboard")
-    parser.add_argument("--provider", type=str, default="litellm", help="LLM provider")
+    parser.add_argument("--provider", type=str, default="litellm", help="LLM provider (mock = offline demo)")
     parser.add_argument("--model", type=str, help="Model name")
     parser.add_argument("--auto-verify", action="store_true", help="Auto-verify without prompts")
     

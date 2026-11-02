@@ -53,7 +53,7 @@ class GamificationEngine:
         earned_xp = base_xp + turn_bonus + token_bonus + (len(new_badges) * 50)
         self.total_xp += earned_xp
 
-        level = (self.total_xp // 250) + 1
+        level = (self.total_xp // 500) + 1  # same 500 XP/level as the quest progression
 
         return {
             "earned_xp": earned_xp,

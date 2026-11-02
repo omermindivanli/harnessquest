@@ -43,6 +43,7 @@ class ContextEngine:
         )
 
         messages = [{"role": "system", "content": combined_system}]
-        messages.extend(history)
+        # Task first, then the running conversation, so the model sees turns in order.
         messages.append({"role": "user", "content": user_prompt})
+        messages.extend(history)
         return messages
