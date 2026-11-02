@@ -4,17 +4,60 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "harnessquest"
-version = "1.0.0"
+version = "1.1.0"
 description = "A gamified, production-grade AI Agent Harness and Execution Sandbox"
 readme = "README.md"
 authors = [{ name = "HarnessQuest Maintainers" }]
 license = { text = "MIT" }
+requires-python = ">=3.10"
 dependencies = [
     "litellm>=1.0.0",
     "rich>=13.0.0",
     "pydantic>=2.0.0",
-    "langchain-core>=0.1.0"
+    "pydantic-settings>=2.0.0",
+    "langchain-core>=0.1.0",
+    "requests>=2.30.0",
+]
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+docs = [
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.24.0",
 ]
 
 [project.scripts]
 harnessquest = "harnessquest.cli.main:main"
+harnessquest-quest = "harnessquest.cli.quest_mode:quest_cli"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

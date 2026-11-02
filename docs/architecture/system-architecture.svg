@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- HarnessQuest System Architecture Diagram -->
+  <defs>
+    <style>
+      .box { fill: #1e1e2e; stroke: #89b4fa; stroke-width: 2; rx: 8; }
+      .box-title { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold; fill: #89b4fa; }
+      .box-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #cdd6f4; }
+      .arrow { stroke: #f9e2af; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+      .arrow-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #f9e2af; }
+      .provider-box { fill: #1e1e2e; stroke: #fab387; stroke-width: 2; rx: 8; }
+      .provider-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; fill: #fab387; }
+      .core-box { fill: #1e1e2e; stroke: #a6e3a1; stroke-width: 2; rx: 8; }
+      .core-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; fill: #a6e3a1; }
+      .gamify-box { fill: #1e1e2e; stroke: #f5c2e7; stroke-width: 2; rx: 8; }
+      .gamify-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; fill: #f5c2e7; }
+      .legend-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #cdd6f4; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f9e2af" />
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#11111b"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" class="box-title" font-size="24">HarnessQuest System Architecture</text>
+  <text x="600" y="65" text-anchor="middle" class="box-text" font-size="12">Multi-Provider Gamified AI Agent Harness & Execution Sandbox</text>
+  
+  <!-- PROVIDER LAYER (Top) -->
+  <g transform="translate(50, 100)">
+    <rect x="0" y="0" width="1100" height="140" class="provider-box"/>
+    <text x="20" y="30" class="provider-title">🌐 PROVIDER ABSTRACTION LAYER</text>
+    
+    <!-- LiteLLM Provider -->
+    <g transform="translate(30, 50)">
+      <rect x="0" y="0" width="180" height="80" rx="6" fill="#2e2e3e" stroke="#fab387" stroke-width="1"/>
+      <text x="90" y="20" text-anchor="middle" class="provider-title" font-size="11">LiteLLM (Unified)</text>
+      <text x="90" y="40" text-anchor="middle" class="box-text" font-size="9">100+ providers</text>
+      <text x="90" y="55" text-anchor="middle" class="box-text" font-size="9">Fallback routing</text>
+      <text x="90" y="70" text-anchor="middle" class="box-text" font-size="9">OpenAI, Anthropic, etc.</text>
+    </g>
+    
+    <!-- OpenAI Provider -->
+    <g transform="translate(240, 50)">
+      <rect x="0" y="0" width="180" height="80" rx="6" fill="#2e2e3e" stroke="#a6e3a1" stroke-width="1"/>
+      <text x="90" y="20" text-anchor="middle" class="provider-title" font-size="11">OpenAI</text>
+      <text x="90" y="40" text-anchor="middle" class="box-text" font-size="9">GPT-4o, GPT-4o-mini</text>
+      <text x="90" y="55" text-anchor="middle" class="box-text" font-size="9">o1-preview, o1-mini</text>
+      <text x="90" y="70" text-anchor="middle" class="box-text" font-size="9">Requires OPENAI_API_KEY</text>
+    </g>
+    
+    <!-- Anthropic Provider -->
+    <g transform="translate(450, 50)">
+      <rect x="0" y="0" width="180" height="80" rx="6" fill="#2e2e3e" stroke="#f38ba8" stroke-width="1"/>
+      <text x="90" y="20" text-anchor="middle" class="provider-title" font-size="11">Anthropic</text>
+      <text x="90" y="40" text-anchor="middle" class="box-text" font-size="9">Claude 3.5 Sonnet</text>
+      <text x="90" y="55" text-anchor="middle" class="box-text" font-size="9">Claude 3.5 Haiku</text>
+      <text x="90" y="70" text-anchor="middle" class="box-text" font-size="9">Requires ANTHROPIC_API_KEY</text>
+    </g>
+    
+    <!-- NVIDIA NIM Provider -->
+    <g transform="translate(660, 50)">
+      <rect x="0" y="0" width="180" height="80" rx="6" fill="#2e2e3e" stroke="#89b4fa" stroke-width="1"/>
+      <text x="90" y="20" text-anchor="middle" class="provider-title" font-size="11">NVIDIA NIM</text>
+      <text x="90" y="40" text-anchor="middle" class="box-text" font-size="9">Nemotron 3 Ultra</text>
+      <text x="90" y="55" text-anchor="middle" class="box-text" font-size="9">Llama 3.1 405B/70B</text>
+      <text x="90" y="70" text-anchor="middle" class="box-text" font-size="9">Requires NVIDIA_API_KEY</text>
+    </g>
+    
+    <!-- Ollama Provider -->
+    <g transform="translate(870, 50)">
+      <rect x="0" y="0" width="180" height="80" rx="6" fill="#2e2e3e" stroke="#f9e2af" stroke-width="1"/>
+      <text x="90" y="20" text-anchor="middle" class="provider-title" font-size="11">Ollama (Local)</text>
+      <text x="90" y="40" text-anchor="middle" class="box-text" font-size="9">Llama 3.1 8B/70B</text>
+      <text x="90" y="55" text-anchor="middle" class="box-text" font-size="9">Nemotron, CodeLlama</text>
+      <text x="90" y="70" text-anchor="middle" class="box-text" font-size="9">Privacy • Offline • Free</text>
+    </g>
+    
+    <!-- Factory Arrow -->
+    <path d="M 550 140 V 170" class="arrow"/>
+    <text x="550" y="160" text-anchor="middle" class="arrow-label">get_provider(factory)</text>
+  </g>
+  
+  <!-- CORE ENGINE LAYER (Middle) -->
+  <g transform="translate(50, 280)">
+    <rect x="0" y="0" width="1100" height="300" class="core-box"/>
+    <text x="20" y="30" class="core-title">⚙️ CORE EXECUTION ENGINE</text>
+    
+    <!-- HarnessRunner -->
+    <g transform="translate(30, 50)">
+      <rect x="0" y="0" width="320" height="220" rx="6" fill="#2e2e3e" stroke="#a6e3a1" stroke-width="1"/>
+      <text x="160" y="25" text-anchor="middle" class="core-title" font-size="12">HarnessRunner</text>
+      <text x="20" y="50" class="box-text">• Agent loop orchestration</text>
+      <text x="20" y="70" class="box-text">• Turn management (max_turns)</text>
+      <text x="20" y="90" class="box-text">• Token tracking</text>
+      <text x="20" y="110" class="box-text">• Fault counting</text>
+      <text x="20" y="130" class="box-text">• Provider integration</text>
+      <text x="20" y="150" class="box-text">• Completion detection</text>
+      <text x="20" y="170" class="box-text">  ([TASK_COMPLETE])</text>
+      <text x="20" y="190" class="box-text">• Duration measurement</text>
+      <text x="20" y="210" class="box-text">• Gamification hook</text>
+    </g>
+    
+    <!-- ContextEngine -->
+    <g transform="translate(380, 50)">
+      <rect x="0" y="0" width="320" height="220" rx="6" fill="#2e2e3e" stroke="#89b4fa" stroke-width="1"/>
+      <text x="160" y="25" text-anchor="middle" class="core-title" font-size="12">ContextEngine</text>
+      <text x="20" y="50" class="box-text">• AGENTS.md loading</text>
+      <text x="20" y="70" class="box-text">• Repo tree generation</text>
+      <text x="20" y="90" class="box-text">• Progressive disclosure</text>
+      <text x="20" y="110" class="box-text">• Context assembly</text>
+      <text x="20" y="130" class="box-text">• System prompt injection</text>
+      <text x="20" y="150" class="box-text">• History management</text>
+      <text x="20" y="170" class="box-text">• Token-efficient injection</text>
+    </g>
+    
+    <!-- ExecutionSandbox -->
+    <g transform="translate(730, 50)">
+      <rect x="0" y="0" width="320" height="220" rx="6" fill="#2e2e3e" stroke="#fab387" stroke-width="1"/>
+      <text x="160" y="25" text-anchor="middle" class="core-title" font-size="12">ExecutionSandbox</text>
+      <text x="20" y="50" class="box-text">• Path validation</text>
+      <text x="20" y="70" class="box-text">  (traversal protection)</text>
+      <text x="20" y="90" class="box-text">• Command allow/deny list</text>
+      <text x="20" y="110" class="box-text">  (rm -rf, fork bombs)</text>
+      <text x="20" y="130" class="box-text">• 15s timeout enforcement</text>
+      <text x="20" y="150" class="box-text">• File read/write ops</text>
+      <text x="20" y="170" class="box-text">• Subprocess isolation</text>
+      <text x="20" y="190" class="box-text">• Result capture</text>
+      <text x="20" y="210" class="box-text">  (stdout, stderr, code)</text>
+    </g>
+  </g>
+  
+  <!-- GAMIFICATION LAYER (Bottom Left) -->
+  <g transform="translate(50, 600)">
+    <rect x="0" y="0" width="500" height="180" class="gamify-box"/>
+    <text x="20" y="30" class="gamify-title">🎮 GAMIFICATION ENGINE</text>
+    
+    <g transform="translate(20, 50)">
+      <text x="0" y="0" class="box-text">GamificationEngine (XP System)</text>
+      <text x="0" y="20" class="box-text">• Base XP: 100/run + bonuses</text>
+      <text x="0" y="40" class="box-text">• Turn bonus: (5-turns) × 25</text>
+      <text x="0" y="60" class="box-text">• Token bonus: (2000-tokens) × 0.1</text>
+      <text x="0" y="80" class="box-text">• Badge bonus: 50 XP each</text>
+      <text x="0" y="100" class="box-text">• Level = total_xp // 250 + 1</text>
+    </g>
+    
+    <g transform="translate(260, 50)">
+      <text x="0" y="0" class="box-text">Achievement Badges</text>
+      <text x="0" y="20" class="box-text">⚡ SNIPER - 1 turn completion</text>
+      <text x="0" y="40" class="box-text">🍃 MINIMALIST - <1200 tokens</text>
+      <text x="0" y="60" class="box-text">🛡️ IRONCLAD - Zero faults</text>
+      <text x="0" y="80" class="box-text">⏱️ SPEEDSTER - <2s execution</text>
+    </g>
+  </g>
+  
+  <!-- 20-LEVEL PROGRESSION (Bottom Right) -->
+  <g transform="translate(570, 600)">
+    <rect x="0" y="0" width="580" height="180" class="gamify-box"/>
+    <text x="20" y="30" class="gamify-title">📈 20-LEVEL PROGRESSION SYSTEM</text>
+    
+    <g transform="translate(20, 50)">
+      <text x="0" y="0" class="box-text" font-size="9">1.  🌱 Initiate           2.  🛡️ Sandbox Apprentice  3.  🗺️ Context Novice</text>
+      <text x="0" y="15" class="box-text" font-size="9">4.  🍃 Token Minimalist   5.  🔨 Tool Smith            6.  ⛔ Guardrail Guardian</text>
+      <text x="0" y="30" class="box-text" font-size="9">7.  ⚖️ Verification Warden 8.  💾 Memory Keeper       9.  🔮 Multi-Model Mage</text>
+      <text x="0" y="45" class="box-text" font-size="9">10. 🏔️ Local LLM Ranger   11. 🚀 NIM Navigator       12. 🔮 Observability Oracle</text>
+      <text x="0" y="60" class="box-text" font-size="9">13. ✈️ Parallel Pilot     14. 📋 Spec-Driven Sage    15. 📦 Context Condenser</text>
+      <text x="0" y="75" class="box-text" font-size="9">16. 🛡️ Security Sentinel  17. 📊 Eval Architect      18. 🏗️ Harness Architect</text>
+      <text x="0" y="90" class="box-text" font-size="9">19. 🏭 Production Hardener 20. 👑 GRANDMASTER</text>
+    </g>
+    
+    <g transform="translate(20, 120)">
+      <rect x="0" y="0" width="540" height="10" rx="5" fill="#2e2e3e"/>
+      <rect x="0" y="0" width="0" height="10" rx="5" fill="#a6e3a1" id="progress-bar"/>
+      <text x="270" y="25" text-anchor="middle" class="box-text" font-size="10">Progress: 0/20 quests (0%) → Grandmaster at Level 20</text>
+    </g>
+  </g>
+  
+  <!-- DATA FLOW ARROWS -->
+  <!-- Provider -> Runner -->
+  <path d="M 600 240 V 280" class="arrow"/>
+  <text x="600" y="265" text-anchor="middle" class="arrow-label">Provider Instance</text>
+  
+  <!-- Runner -> Context -->
+  <path d="M 350 400 H 380" class="arrow"/>
+  <text x="365" y="390" text-anchor="middle" class="arrow-label">assemble_context()</text>
+  
+  <!-- Runner -> Sandbox -->
+  <path d="M 700 400 H 730" class="arrow"/>
+  <text x="715" y="390" text-anchor="middle" class="arrow-label">run_command()</text>
+  
+  <!-- Runner -> Gamification -->
+  <path d="M 350 500 V 600" class="arrow"/>
+  <text x="340" y="550" text-anchor="middle" class="arrow-label">evaluate_run()</text>
+  
+  <!-- Legend -->
+  <g transform="translate(50, 760)">
+    <text x="0" y="0" class="legend-text">Legend:</text>
+    <text x="80" y="0" class="legend-text">🟢 Core Engine    </text>
+    <text x="200" y="0" class="legend-text">🟠 Providers    </text>
+    <text x="320" y="0" class="legend-text">🟣 Gamification </text>
+    <text x="440" y="0" class="legend-text">🔵 Context/Sandbox</text>
+    <text x="580" y="0" class="legend-text">🟡 Data Flow</text>
+  </g>
+</svg>

@@ -1,2 +1,3 @@
 [console_scripts]
 harnessquest = harnessquest.cli.main:main
+harnessquest-quest = harnessquest.cli.quest_mode:quest_cli

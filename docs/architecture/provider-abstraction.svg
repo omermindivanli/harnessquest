@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000" height="600" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Provider Abstraction Diagram -->
+  <defs>
+    <style>
+      .box { fill: #1e1e2e; stroke: #89b4fa; stroke-width: 2; rx: 8; }
+      .box-title { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold; fill: #89b4fa; }
+      .box-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #cdd6f4; }
+      .provider-box { fill: #2e2e3e; stroke: #fab387; stroke-width: 1; rx: 6; }
+      .provider-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; fill: #fab387; }
+      .provider-model { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #cdd6f4; }
+      .interface-box { fill: #1e1e2e; stroke: #a6e3a1; stroke-width: 2; rx: 8; }
+      .interface-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: bold; fill: #a6e3a1; }
+      .factory-box { fill: #1e1e2e; stroke: #f9e2af; stroke-width: 2; rx: 8; }
+      .factory-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: bold; fill: #f9e2af; }
+      .arrow { stroke: #f9e2af; stroke-width: 2; marker-end: url(#arrowhead); fill: none; }
+      .arrow-dashed { stroke: #f9e2af; stroke-width: 2; stroke-dasharray: 5,5; marker-end: url(#arrowhead); fill: none; }
+      .arrow-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #f9e2af; }
+      .legend-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #cdd6f4; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f9e2af" />
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1000" height="600" fill="#11111b"/>
+  
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" class="box-title" font-size="22">Provider Abstraction Layer</text>
+  <text x="500" y="55" text-anchor="middle" class="box-text" font-size="11">Unified Interface for OpenAI, Anthropic, NVIDIA NIM, Ollama & LiteLLM</text>
+  
+  <!-- LLMProvider Interface (Center Top) -->
+  <g transform="translate(300, 80)">
+    <rect x="0" y="0" width="400" height="160" class="interface-box"/>
+    <text x="200" y="30" text-anchor="middle" class="interface-title">🔌 LLMProvider (Abstract Base Class)</text>
+    
+    <text x="20" y="60" class="box-text">+ complete(messages, model, temp, tokens, tools) → Any</text>
+    <text x="20" y="80" class="box-text">+ stream_complete(messages, model, temp, tokens, tools) → AsyncIterator</text>
+    <text x="20" y="100" class="box-text">+ get_available_models() → List[ModelInfo]</text>
+    <text x="20" y="120" class="box-text">+ validate_config() → (bool, str)</text>
+    <text x="20" y="140" class="box-text">+ get_default_model() → str</text>
+    <text x="20" y="155" class="box-text">properties: provider_name, api_key, base_url</text>
+  </g>
+  
+  <!-- Factory (Center) -->
+  <g transform="translate(350, 260)">
+    <rect x="0" y="0" width="300" height="100" class="factory-box"/>
+    <text x="150" y="30" text-anchor="middle" class="factory-title">🏭 Provider Factory</text>
+    <text x="150" y="55" text-anchor="middle" class="box-text">get_provider(name: str) → LLMProvider</text>
+    <text x="150" y="75" text-anchor="middle" class="box-text">list_providers() → Dict</text>
+    <text x="150" y="95" text-anchor="middle" class="box-text">get_all_models() → Dict[str, List[ModelInfo]]</text>
+  </g>
+  
+  <!-- CONCRETE PROVIDERS (Bottom Row) -->
+  <!-- LiteLLM Provider -->
+  <g transform="translate(30, 380)">
+    <rect x="0" y="0" width="180" height="180" class="provider-box"/>
+    <text x="90" y="25" text-anchor="middle" class="provider-title">LiteLLM (Unified)</text>
+    <text x="10" y="45" class="provider-model">provider_name: "litellm"</text>
+    <text x="10" y="60" class="provider-model">No API key required</text>
+    <text x="10" y="75" class="provider-model">Uses provider-specific keys</text>
+    <text x="10" y="95" class="provider-model">Models:</text>
+    <text x="10" y="110" class="provider-model">  gpt-4o, gpt-4o-mini</text>
+    <text x="10" y="125" class="provider-model">  claude-3.5-sonnet</text>
+    <text x="10" y="140" class="provider-model">  claude-3.5-haiku</text>
+    <text x="10" y="160" class="provider-model">+ 100 more via LiteLLM</text>
+  </g>
+  
+  <!-- OpenAI Provider -->
+  <g transform="translate(230, 380)">
+    <rect x="0" y="0" width="180" height="180" class="provider-box"/>
+    <text x="90" y="25" text-anchor="middle" class="provider-title" style="fill: #a6e3a1;">OpenAI</text>
+    <text x="10" y="45" class="provider-model">provider_name: "openai"</text>
+    <text x="10" y="60" class="provider-model">Requires: OPENAI_API_KEY</text>
+    <text x="10" y="75" class="provider-model">Base URL: optional</text>
+    <text x="10" y="95" class="provider-model">Models:</text>
+    <text x="10" y="110" class="provider-model">  gpt-4o (flagship)</text>
+    <text x="10" y="125" class="provider-model">  gpt-4o-mini (fast)</text>
+    <text x="10" y="140" class="provider-model">  o1-preview (reasoning)</text>
+    <text x="10" y="155" class="provider-model">  o1-mini (fast reasoning)</text>
+  </g>
+  
+  <!-- Anthropic Provider -->
+  <g transform="translate(430, 380)">
+    <rect x="0" y="0" width="180" height="180" class="provider-box"/>
+    <text x="90" y="25" text-anchor="middle" class="provider-title" style="fill: #f38ba8;">Anthropic</text>
+    <text x="10" y="45" class="provider-model">provider_name: "anthropic"</text>
+    <text x="10" y="60" class="provider-model">Requires: ANTHROPIC_API_KEY</text>
+    <text x="10" y="75" class="provider-model">Base URL: optional</text>
+    <text x="10" y="95" class="provider-model">Models:</text>
+    <text x="10" y="110" class="provider-model">  claude-3.5-sonnet</text>
+    <text x="10" y="125" class="provider-model">  claude-3.5-haiku</text>
+    <text x="10" y="140" class="provider-model">  claude-3-opus</text>
+    <text x="10" y="155" class="provider-model">Best for coding tasks</text>
+  </g>
+  
+  <!-- NVIDIA NIM Provider -->
+  <g transform="translate(630, 380)">
+    <rect x="0" y="0" width="180" height="180" class="provider-box"/>
+    <text x="90" y="25" text-anchor="middle" class="provider-title" style="fill: #89b4fa;">NVIDIA NIM</text>
+    <text x="10" y="45" class="provider-model">provider_name: "nim"</text>
+    <text x="10" y="60" class="provider-model">Requires: NVIDIA_API_KEY</text>
+    <text x="10" y="75" class="provider-model">Requires: NVIDIA_NIM_BASE_URL</text>
+    <text x="10" y="95" class="provider-model">Models:</text>
+    <text x="10" y="110" class="provider-model">  nemotron-3-ultra</text>
+    <text x="10" y="125" class="provider-model">  llama-3.1-405b/70b</text>
+    <text x="10" y="140" class="provider-model">  mistral-large</text>
+    <text x="10" y="155" class="provider-model">GPU-optimized inference</text>
+  </g>
+  
+  <!-- Ollama Provider -->
+  <g transform="translate(830, 380)">
+    <rect x="0" y="0" width="160" height="180" class="provider-box"/>
+    <text x="80" y="25" text-anchor="middle" class="provider-title" style="fill: #f9e2af;">Ollama (Local)</text>
+    <text x="10" y="45" class="provider-model">provider_name: "ollama"</text>
+    <text x="10" y="60" class="provider-model">No API key needed!</text>
+    <text x="10" y="75" class="provider-model">Base URL: localhost:11434</text>
+    <text x="10" y="95" class="provider-model">Models:</text>
+    <text x="10" y="110" class="provider-model">  llama3.1:8b</text>
+    <text x="10" y="125" class="provider-model">  llama3.1:70b</text>
+    <text x="10" y="140" class="provider-model">  nemotron3:ultra</text>
+    <text x="10" y="155" class="provider-model">  codellama:13b</text>
+    <text x="10" y="170" class="provider-model">Privacy • Offline • Free</text>
+  </g>
+  
+  <!-- INHERITANCE ARROWS -->
+  <path d="M 120 240 V 260" class="arrow-dashed"/>
+  <path d="M 330 240 V 260" class="arrow-dashed"/>
+  <path d="M 420 240 V 260" class="arrow-dashed"/>
+  <path d="M 520 240 V 260" class="arrow-dashed"/>
+  <path d="M 620 240 V 260" class="arrow-dashed"/>
+  
+  <text x="120" y="255" text-anchor="middle" class="arrow-label">implements</text>
+  <text x="330" y="255" text-anchor="middle" class="arrow-label">implements</text>
+  <text x="420" y="255" text-anchor="middle" class="arrow-label">implements</text>
+  <text x="520" y="255" text-anchor="middle" class="arrow-label">implements</text>
+  <text x="620" y="255" text-anchor="middle" class="arrow-label">implements</text>
+  
+  <!-- FACTORY TO PROVIDERS -->
+  <path d="M 200 360 V 380" class="arrow"/>
+  <path d="M 320 360 V 380" class="arrow"/>
+  <path d="M 420 360 V 380" class="arrow"/>
+  <path d="M 520 360 V 380" class="arrow"/>
+  <path d="M 620 360 V 380" class="arrow"/>
+  <path d="M 720 360 V 380" class="arrow"/>
+  
+  <text x="200" y="375" text-anchor="middle" class="arrow-label">creates</text>
+  <text x="320" y="375" text-anchor="middle" class="arrow-label">creates</text>
+  <text x="420" y="375" text-anchor="middle" class="arrow-label">creates</text>
+  <text x="520" y="375" text-anchor="middle" class="arrow-label">creates</text>
+  <text x="620" y="375" text-anchor="middle" class="arrow-label">creates</text>
+  <text x="720" y="375" text-anchor="middle" class="arrow-label">creates</text>
+  
+  <!-- USAGE EXAMPLE -->
+  <g transform="translate(30, 570)">
+    <text x="0" y="0" class="legend-text">Usage: provider = get_provider("openai"); result = await provider.complete(messages, "gpt-4o")</text>
+  </g>
+  
+  <!-- CONFIG FLOW (Left Side) -->
+  <g transform="translate(30, 100)">
+    <rect x="0" y="0" width="250" height="250" class="box"/>
+    <text x="125" y="25" text-anchor="middle" class="box-title">⚙️ Configuration (.env)</text>
+    
+    <text x="15" y="55" class="box-text">OPENAI_API_KEY=sk-...</text>
+    <text x="15" y="75" class="box-text">ANTHROPIC_API_KEY=sk-ant-...</text>
+    <text x="15" y="95" class="box-text">NVIDIA_API_KEY=nvapi-...</text>
+    <text x="15" y="115" class="box-text">NVIDIA_NIM_BASE_URL=https://...</text>
+    <text x="15" y="135" class="box-text">OLLAMA_BASE_URL=http://localhost:11434</text>
+    <text x="15" y="155" class="box-text">DEFAULT_PROVIDER=litellm</text>
+    <text x="15" y="175" class="box-text">DEFAULT_MODEL=gpt-4o-mini</text>
+    
+    <text x="15" y="205" class="box-title" font-size="11">Settings (Pydantic)</text>
+    <text x="15" y="225" class="box-text">get_settings() → Settings</text>
+    <text x="15" y="240" class="box-text">validate_provider_config()</text>
+  </g>
+  
+  <!-- HARNESS RUNNER USAGE (Right Side) -->
+  <g transform="translate(720, 100)">
+    <rect x="0" y="0" width="250" height="250" class="box"/>
+    <text x="125" y="25" text-anchor="middle" class="box-title">⚙️ HarnessRunner Usage</text>
+    
+    <text x="15" y="55" class="box-text">runner = HarnessRunner(</text>
+    <text x="30" y="75" class="box-text">model="gpt-4o-mini",</text>
+    <text x="30" y="95" class="box-text">provider="openai",</text>
+    <text x="30" y="115" class="box-text">max_turns=10,</text>
+    <text x="30" y="135" class="box-text">workspace="."</text>
+    <text x="15" y="155" class="box-text">)</text>
+    
+    <text x="15" y="185" class="box-text">result = await runner.run(</text>
+    <text x="30" y="205" class="box-text">prompt="List files",</text>
+    <text x="30" y="225" class="box-text">temperature=0.1</text>
+    <text x="15" y="245" class="box-text">)</text>
+  </g>
+</svg>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000" height="700" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gamification Progression Tree -->
+  <defs>
+    <style>
+      .level-node { fill: #1e1e2e; stroke: #89b4fa; stroke-width: 2; rx: 8; }
+      .level-node-completed { fill: #1e1e2e; stroke: #a6e3a1; stroke-width: 3; rx: 8; }
+      .level-node-current { fill: #1e1e2e; stroke: #f9e2af; stroke-width: 3; rx: 8; }
+      .level-node-locked { fill: #11111b; stroke: #313244; stroke-width: 1; rx: 8; opacity: 0.6; }
+      .level-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; fill: #cdd6f4; text-anchor: middle; }
+      .level-title-locked { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; fill: #6c7086; text-anchor: middle; }
+      .level-xp { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #f9e2af; text-anchor: middle; }
+      .level-badge { font-family: 'JetBrains Mono', monospace; font-size: 14px; text-anchor: middle; }
+      .level-diff { font-family: 'JetBrains Mono', monospace; font-size: 8px; fill: #fab387; text-anchor: middle; }
+      .tier-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: bold; fill: #89b4fa; }
+      .tier-line { stroke: #313244; stroke-width: 1; stroke-dasharray: 5,5; }
+      .connector { stroke: #585b70; stroke-width: 2; fill: none; }
+      .connector-active { stroke: #f9e2af; stroke-width: 2; fill: none; }
+      .legend-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #cdd6f4; }
+      .legend-swatch { width: 20; height: 20; rx: 4; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1000" height="700" fill="#11111b"/>
+  
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" class="tier-label" font-size="20">🎮 HarnessQuest 20-Level Progression Tree</text>
+  <text x="500" y="55" text-anchor="middle" class="legend-text">Beginner → Intermediate → Advanced → Expert → Grandmaster</text>
+  
+  <!-- TIER LABELS -->
+  <g transform="translate(30, 85)">
+    <text x="0" y="0" class="tier-label" fill="#a6e3a1">TIER 1: FOUNDATION (Levels 1-4)</text>
+    <text x="0" y="15" class="legend-text">Core harness concepts: loop, sandbox, context, tokens</text>
+  </g>
+  <g transform="translate(30, 240)">
+    <text x="0" y="0" class="tier-label" fill="#89b4fa">TIER 2: ENGINEERING (Levels 5-9)</text>
+    <text x="0" y="15" class="legend-text">Tools, constraints, verification, memory, multi-provider</text>
+  </g>
+  <g transform="translate(30, 395)">
+    <text x="0" y="0" class="tier-label" fill="#fab387">TIER 3: SPECIALIZATION (Levels 10-14)</text>
+    <text x="0" y="15" class="legend-text">Local LLMs, NIM, observability, multi-agent, spec-driven</text>
+  </g>
+  <g transform="translate(30, 550)">
+    <text x="0" y="0" class="tier-label" fill="#f5c2e7">TIER 4: MASTERY (Levels 15-20)</text>
+    <text x="0" y="15" class="legend-text">Context condensation, security, eval, architecture, production, capstone</text>
+  </g>
+  
+  <!-- LEVEL NODES -->
+  <!-- Row 1: Levels 1-4 -->
+  <g transform="translate(50, 115)">
+    <!-- Level 1 -->
+    <g id="lvl1" transform="translate(0, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-current"/>
+      <text x="70" y="18" class="level-badge">🌱</text>
+      <text x="70" y="38" class="level-title">1. INITIATE</text>
+      <text x="70" y="55" class="level-title">Hello Harness</text>
+      <text x="70" y="72" class="level-xp">+100 XP</text>
+      <text x="70" y="87" class="level-diff">BEGINNER</text>
+    </g>
+    
+    <!-- Level 2 -->
+    <g id="lvl2" transform="translate(160, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🛡️</text>
+      <text x="70" y="38" class="level-title-locked">2. SANDBOX</text>
+      <text x="70" y="55" class="level-title-locked">Apprentice</text>
+      <text x="70" y="72" class="level-xp">+150 XP</text>
+      <text x="70" y="87" class="level-diff">BEGINNER</text>
+    </g>
+    
+    <!-- Level 3 -->
+    <g id="lvl3" transform="translate(320, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🗺️</text>
+      <text x="70" y="38" class="level-title-locked">3. CONTEXT</text>
+      <text x="70" y="55" class="level-title-locked">Novice</text>
+      <text x="70" y="72" class="level-xp">+150 XP</text>
+      <text x="70" y="87" class="level-diff">BEGINNER</text>
+    </g>
+    
+    <!-- Level 4 -->
+    <g id="lvl4" transform="translate(480, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🍃</text>
+      <text x="70" y="38" class="level-title-locked">4. TOKEN</text>
+      <text x="70" y="55" class="level-title-locked">Minimalist</text>
+      <text x="70" y="72" class="level-xp">+200 XP</text>
+      <text x="70" y="87" class="level-diff">INTERMEDIATE</text>
+    </g>
+  </g>
+  
+  <!-- Row 2: Levels 5-9 -->
+  <g transform="translate(50, 270)">
+    <!-- Level 5 -->
+    <g id="lvl5" transform="translate(0, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🔨</text>
+      <text x="70" y="38" class="level-title-locked">5. TOOL</text>
+      <text x="70" y="55" class="level-title-locked">Smith</text>
+      <text x="70" y="72" class="level-xp">+200 XP</text>
+      <text x="70" y="87" class="level-diff">INTERMEDIATE</text>
+    </g>
+    
+    <!-- Level 6 -->
+    <g id="lvl6" transform="translate(160, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">⛔</text>
+      <text x="70" y="38" class="level-title-locked">6. GUARDRAIL</text>
+      <text x="70" y="55" class="level-title-locked">Guardian</text>
+      <text x="70" y="72" class="level-xp">+250 XP</text>
+      <text x="70" y="87" class="level-diff">INTERMEDIATE</text>
+    </g>
+    
+    <!-- Level 7 -->
+    <g id="lvl7" transform="translate(320, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">⚖️</text>
+      <text x="70" y="38" class="level-title-locked">7. VERIFICATION</text>
+      <text x="70" y="55" class="level-title-locked">Warden</text>
+      <text x="70" y="72" class="level-xp">+300 XP</text>
+      <text x="70" y="87" class="level-diff">ADVANCED</text>
+    </g>
+    
+    <!-- Level 8 -->
+    <g id="lvl8" transform="translate(480, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">💾</text>
+      <text x="70" y="38" class="level-title-locked">8. MEMORY</text>
+      <text x="70" y="55" class="level-title-locked">Keeper</text>
+      <text x="70" y="72" class="level-xp">+300 XP</text>
+      <text x="70" y="87" class="level-diff">ADVANCED</text>
+    </g>
+    
+    <!-- Level 9 -->
+    <g id="lvl9" transform="translate(640, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🔮</text>
+      <text x="70" y="38" class="level-title-locked">9. MULTI-MODEL</text>
+      <text x="70" y="55" class="level-title-locked">Mage</text>
+      <text x="70" y="72" class="level-xp">+350 XP</text>
+      <text x="70" y="87" class="level-diff">INTERMEDIATE</text>
+    </g>
+  </g>
+  
+  <!-- Row 3: Levels 10-14 -->
+  <g transform="translate(50, 425)">
+    <!-- Level 10 -->
+    <g id="lvl10" transform="translate(0, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🏔️</text>
+      <text x="70" y="38" class="level-title-locked">10. LOCAL LLM</text>
+      <text x="70" y="55" class="level-title-locked">Ranger</text>
+      <text x="70" y="72" class="level-xp">+300 XP</text>
+      <text x="70" y="87" class="level-diff">INTERMEDIATE</text>
+    </g>
+    
+    <!-- Level 11 -->
+    <g id="lvl11" transform="translate(160, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🚀</text>
+      <text x="70" y="38" class="level-title-locked">11. NIM</text>
+      <text x="70" y="55" class="level-title-locked">Navigator</text>
+      <text x="70" y="72" class="level-xp">+400 XP</text>
+      <text x="70" y="87" class="level-diff">ADVANCED</text>
+    </g>
+    
+    <!-- Level 12 -->
+    <g id="lvl12" transform="translate(320, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🔮</text>
+      <text x="70" y="38" class="level-title-locked">12. OBSERVABILITY</text>
+      <text x="70" y="55" class="level-title-locked">Oracle</text>
+      <text x="70" y="72" class="level-xp">+350 XP</text>
+      <text x="70" y="87" class="level-diff">ADVANCED</text>
+    </g>
+    
+    <!-- Level 13 -->
+    <g id="lvl13" transform="translate(480, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">✈️</text>
+      <text x="70" y="38" class="level-title-locked">13. PARALLEL</text>
+      <text x="70" y="55" class="level-title-locked">Pilot</text>
+      <text x="70" y="72" class="level-xp">+450 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+    
+    <!-- Level 14 -->
+    <g id="lvl14" transform="translate(640, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">📋</text>
+      <text x="70" y="38" class="level-title-locked">14. SPEC-DRIVEN</text>
+      <text x="70" y="55" class="level-title-locked">Sage</text>
+      <text x="70" y="72" class="level-xp">+400 XP</text>
+      <text x="70" y="87" class="level-diff">ADVANCED</text>
+    </g>
+  </g>
+  
+  <!-- Row 4: Levels 15-20 -->
+  <g transform="translate(50, 580)">
+    <!-- Level 15 -->
+    <g id="lvl15" transform="translate(0, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">📦</text>
+      <text x="70" y="38" class="level-title-locked">15. CONTEXT</text>
+      <text x="70" y="55" class="level-title-locked">Condenser</text>
+      <text x="70" y="72" class="level-xp">+500 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+    
+    <!-- Level 16 -->
+    <g id="lvl16" transform="translate(160, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🛡️</text>
+      <text x="70" y="38" class="level-title-locked">16. SECURITY</text>
+      <text x="70" y="55" class="level-title-locked">Sentinel</text>
+      <text x="70" y="72" class="level-xp">+500 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+    
+    <!-- Level 17 -->
+    <g id="lvl17" transform="translate(320, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">📊</text>
+      <text x="70" y="38" class="level-title-locked">17. EVAL</text>
+      <text x="70" y="55" class="level-title-locked">Architect</text>
+      <text x="70" y="72" class="level-xp">+550 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+    
+    <!-- Level 18 -->
+    <g id="lvl18" transform="translate(480, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🏗️</text>
+      <text x="70" y="38" class="level-title-locked">18. HARNESS</text>
+      <text x="70" y="55" class="level-title-locked">Architect</text>
+      <text x="70" y="72" class="level-xp">+600 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+    
+    <!-- Level 19 -->
+    <g id="lvl19" transform="translate(640, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked"/>
+      <text x="70" y="18" class="level-badge">🏭</text>
+      <text x="70" y="38" class="level-title-locked">19. PRODUCTION</text>
+      <text x="70" y="55" class="level-title-locked">Hardener</text>
+      <text x="70" y="72" class="level-xp">+700 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+    
+    <!-- Level 20 -->
+    <g id="lvl20" transform="translate(800, 0)">
+      <rect x="0" y="0" width="140" height="100" class="level-node-locked" style="stroke: #f5c2e7; stroke-width: 3;"/>
+      <text x="70" y="18" class="level-badge">👑</text>
+      <text x="70" y="38" class="level-title-locked">20. GRANDMASTER</text>
+      <text x="70" y="55" class="level-title-locked">Capstone</text>
+      <text x="70" y="72" class="level-xp">+1000 XP</text>
+      <text x="70" y="87" class="level-diff">EXPERT</text>
+    </g>
+  </g>
+  
+  <!-- CONNECTORS (simplified) -->
+  <g stroke="#585b70" stroke-width="2" fill="none">
+    <!-- Row 1 horizontal -->
+    <path d="M 190 165 H 240" class="connector-active"/>
+    <path d="M 350 165 H 400" class="connector"/>
+    <path d="M 510 165 H 560" class="connector"/>
+    
+    <!-- Row 1 to Row 2 -->
+    <path d="M 70 215 V 270" class="connector"/>
+    <path d="M 230 215 V 270" class="connector"/>
+    <path d="M 390 215 V 270" class="connector"/>
+    <path d="M 550 215 V 270" class="connector"/>
+    
+    <!-- Row 2 horizontal -->
+    <path d="M 190 320 H 240" class="connector"/>
+    <path d="M 350 320 H 400" class="connector"/>
+    <path d="M 510 320 H 560" class="connector"/>
+    <path d="M 670 320 H 710" class="connector"/>
+    
+    <!-- Row 2 to Row 3 -->
+    <path d="M 70 370 V 425" class="connector"/>
+    <path d="M 230 370 V 425" class="connector"/>
+    <path d="M 390 370 V 425" class="connector"/>
+    <path d="M 550 370 V 425" class="connector"/>
+    <path d="M 710 370 V 425" class="connector"/>
+    
+    <!-- Row 3 horizontal -->
+    <path d="M 190 475 H 240" class="connector"/>
+    <path d="M 350 475 H 400" class="connector"/>
+    <path d="M 510 475 H 560" class="connector"/>
+    <path d="M 670 475 H 710" class="connector"/>
+    
+    <!-- Row 3 to Row 4 -->
+    <path d="M 70 525 V 580" class="connector"/>
+    <path d="M 230 525 V 580" class="connector"/>
+    <path d="M 390 525 V 580" class="connector"/>
+    <path d="M 550 525 V 580" class="connector"/>
+    <path d="M 710 525 V 580" class="connector"/>
+    
+    <!-- Row 4 horizontal -->
+    <path d="M 190 630 H 240" class="connector"/>
+    <path d="M 350 630 H 400" class="connector"/>
+    <path d="M 510 630 H 560" class="connector"/>
+    <path d="M 670 630 H 710" class="connector"/>
+    <path d="M 830 630 H 870" class="connector"/>
+  </g>
+  
+  <!-- LEGEND -->
+  <g transform="translate(820, 85)">
+    <rect x="0" y="0" width="160" height="120" class="level-node" style="stroke: #313244;"/>
+    <text x="80" y="18" text-anchor="middle" class="tier-label" font-size="11">Legend</text>
+    
+    <rect x="10" y="30" width="20" height="20" class="level-node-current"/>
+    <text x="40" y="45" class="legend-text">Current Quest</text>
+    
+    <rect x="10" y="55" width="20" height="20" class="level-node" style="stroke: #a6e3a1; stroke-width: 3;"/>
+    <text x="40" y="70" class="legend-text">Completed</text>
+    
+    <rect x="10" y="80" width="20" height="20" class="level-node-locked"/>
+    <text x="40" y="95" class="legend-text">Locked</text>
+    
+    <text x="10" y="115" class="legend-text" font-size="9">Complete prereqs to unlock</text>
+  </g>
+  
+  <!-- XP TRACKER -->
+  <g transform="translate(820, 220)">
+    <rect x="0" y="0" width="160" height="100" class="level-node" style="stroke: #313244;"/>
+    <text x="80" y="18" text-anchor="middle" class="tier-label" font-size="11">XP Tracker</text>
+    
+    <text x="10" y="40" class="legend-text">Total XP: 0</text>
+    <text x="10" y="55" class="legend-text">Level: 1</text>
+    <text x="10" y="70" class="legend-text">XP to Level 2: 500</text>
+    <text x="10" y="85" class="legend-text">Quests: 0/20</text>
+  </g>
+  
+  <!-- BADGE PREVIEW -->
+  <g transform="translate(820, 340)">
+    <rect x="0" y="0" width="160" height="180" class="level-node" style="stroke: #313244;"/>
+    <text x="80" y="18" text-anchor="middle" class="tier-label" font-size="11">Core Badges</text>
+    
+    <text x="10" y="40" class="legend-text">⚡ SNIPER - 1 turn</text>
+    <text x="10" y="55" class="legend-text">🍃 MINIMALIST - <1200 tok</text>
+    <text x="10" y="70" class="legend-text">🛡️ IRONCLAD - 0 faults</text>
+    <text x="10" y="85" class="legend-text">⏱️ SPEEDSTER - <2s</text>
+    
+    <text x="10" y="110" class="legend-text">Quest Badges (20 total)</text>
+    <text x="10" y="125" class="legend-text">Each level = unique badge</text>
+    <text x="10" y="140" class="legend-text">+50 XP per badge</text>
+    <text x="10" y="155" class="legend-text">👑 GRANDMASTER = +1000 XP</text>
+  </g>
+</svg>
