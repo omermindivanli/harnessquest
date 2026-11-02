@@ -25,7 +25,15 @@ def test_artifact_checks_fail_then_pass(tmp_path):
     assert not ok
     base = tmp_path / "my_harness"
     base.mkdir()
-    (base / "tools.py").write_text("def calculate(a, b, op):\n    return a + b  # placeholder tool\n")
+    (base / "tools.py").write_text("def calculate(a, b, op):\n    return a + b  # wrong: not structured\n")
+    ok, msg = run_check(5, str(tmp_path))
+    assert not ok and "calculate" in msg  # behaviour is tested, not just keywords
+    (base / "tools.py").write_text(
+        "def calculate(a, b, op):\n"
+        "    if op not in '+-*/':\n        return {'ok': False, 'error': 'bad op'}\n"
+        "    if op == '/' and b == 0:\n        return {'ok': False, 'error': 'div0'}\n"
+        "    return {'ok': True, 'result': {'+': a+b, '-': a-b, '*': a*b, '/': a/b if b else 0}[op]}\n"
+    )
     ok, msg = run_check(5, str(tmp_path))
     assert ok, msg
 

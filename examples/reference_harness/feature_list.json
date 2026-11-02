@@ -1,0 +1,9 @@
+{
+  "features": [
+    {"id": 1, "description": "Agent loop with turn limit", "status": "passing"},
+    {"id": 2, "description": "Sandboxed command execution", "status": "passing"},
+    {"id": 3, "description": "AGENTS.md context injection", "status": "passing"},
+    {"id": 4, "description": "Provider fallback", "status": "in_progress"},
+    {"id": 5, "description": "Per-turn tracing", "status": "failing"}
+  ]
+}

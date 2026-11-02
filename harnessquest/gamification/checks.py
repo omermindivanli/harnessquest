@@ -116,6 +116,11 @@ for _lvl in ARTIFACTS:
 
 def run_check(level: int, workspace: str = ".") -> CheckResult:
     """Run the deterministic verifier for a level (levels with no check pass on agent success)."""
+    from harnessquest.gamification.probes import run_probe
+
+    probed = run_probe(level, workspace)  # real behavioural test of the learner's code
+    if probed is not None:
+        return probed
     check = CHECKS.get(level)
     if check is None:
         return True, "No extra check for this level."

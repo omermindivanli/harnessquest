@@ -37,7 +37,30 @@ are deliberately light: the goal is the thinking. Build the real thing, not the 
 | 19 | Hardening | `hardening.py` | Timeouts, cleanup and resource limits. |
 | 20 | Capstone | `README.md` | Document a harness for your own domain, then publish it. |
 
-## Reality check
+## Exact contracts (what the checks actually run)
 
-Levels 4-20 verify that you built something relevant, not that it is perfect. If you
-want a stricter signal, point your own tests at `my_harness/` and run them in CI.
+Levels 4-9, 12, 13, 15-17 and 19 **import your file and call your functions**. Level 14 validates
+your JSON. Levels 10, 11, 18 and 20 are documentation levels (a non-trivial notes/design file).
+
+| Lv | File | You must provide | Tested behaviour |
+|----|------|------------------|------------------|
+| 4 | `context.py` | `trim_history(messages, max_tokens) -> list` | Drops old messages when over budget, keeps the newest, returns input unchanged when under budget |
+| 5 | `tools.py` | `calculate(a, b, op) -> dict` | `calculate(15, 23, "*") == {"ok": True, "result": 345}`; bad op and divide-by-zero return `{"ok": False, "error": ...}` |
+| 6 | `guardrails.py` | `class LoopDetector(limit=3)` with `seen_loop(action) -> bool` | True on the 3rd identical action in a row; never for varied actions |
+| 7 | `verify.py` | `verify(output: str) -> bool` | Rejects empty output and output without `[TASK_COMPLETE]` |
+| 8 | `memory.py` | `save_state(path, state)`, `load_state(path)` | Round-trips a dict through disk |
+| 9 | `providers.py` | `async complete_with_fallback(providers, messages, model)` | Skips failing providers, returns the first success, raises if all fail |
+| 12 | `telemetry.py` | `class Tracer` with `span(turn, model, tokens, started, tools, status)` and `.spans` | Each span is a dict with those keys and a sensible duration |
+| 13 | `orchestrator.py` | `make_plan(task) -> list[str]`, `run_plan(plan, executor) -> list` | Plan has 2+ steps; executor is called once per step, in order |
+| 14 | `feature_list.json` | `{"features": [...5+ items...]}` | Each item has `id`, `description`, `status` (`failing`/`in_progress`/`passing`) |
+| 15 | `condense.py` | `condense(messages) -> list` | Output far shorter than a 42-message input, keeps the first message (goal) and the latest failure |
+| 16 | `security.py` | `scan(text) -> list` | Non-empty for "Ignore previous instructions...", empty for benign text |
+| 17 | `evals.py` | `score(results: list[bool]) -> float` | Pass fraction; `score([]) == 0` |
+| 19 | `hardening.py` | `run_with_timeout(func, seconds)` | Raises `TimeoutError` for a slow function, returns fast results |
+
+Your code runs in a separate Python process (`python -I`, 15 s timeout), so bugs or infinite
+loops cannot crash the game.
+
+## Stuck?
+
+Working solutions live in [`examples/reference_harness/`](../examples/reference_harness/). Try first, then peek.

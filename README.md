@@ -36,9 +36,10 @@
 
 ### 🛡️ Secure Execution Sandbox
 - Path traversal protection (`../../../etc/passwd` → blocked)
-- Dangerous command filtering (`rm -rf /`, fork bombs, `mkfs`, `dd`)
-- 15-second command timeout enforcement
-- Workspace isolation
+- Command allowlist, no shell (pipes, redirects and `$(...)` are refused)
+- Every path argument resolved through symlinks and kept inside the workspace
+- Scrubbed environment (API keys never reach child processes), 15-second timeout, CPU/file-size limits
+- Teaching sandbox, not an OS boundary: use a container for untrusted code
 
 ### 🧠 Context Engineering
 - **AGENTS.md** as map (not encyclopedia) — progressive disclosure
